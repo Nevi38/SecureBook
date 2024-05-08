@@ -6,29 +6,7 @@ import axios from 'axios'
 const app = express();
 const endpoint = `/api/auth`;
 
-app.use(async (req, res, next) => {
-    if (req.path.startsWith('/api/auth/')) {
-        next();
-    } else {
-        if (req.headers['access_token']) {
-            const isValid = await AccountController.checkToken(req.headers['access_token'])
 
-            if (isValid) {
-                next();
-            } else {
-                return res.send({
-                    code: 400,
-                    message: "Token is invalid or expired"
-                })
-            }
-        } else {
-            return res.send({
-                code: 401,
-                message: "No token provided"
-            })
-        }
-    }
-});
 
 
 app.post(`${endpoint}/register`, async function (req, res) {
